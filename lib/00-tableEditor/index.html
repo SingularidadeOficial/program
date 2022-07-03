@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Webpack starter kit</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    
+    <style>
+        .s-modal-container {
+            width: 100vw;
+            height: 100vh;
+            background:rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes modalContainerOpen {
+            from {
+                opacity: 0;
+                transform: translate3d(0, -60px, -200px);
+            } 
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .s-modal-container.visible{
+            display: flex;
+            animation: modalContainerOpen 0.3s;
+        }
+
+        .s-modal-frame {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            width: 30%;
+            height: 50%;
+            min-width: 300px;
+            min-height: 300px;
+            padding: 40px;
+            border: 10px solid rgba(0, 0, 0, 0.87);
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .s-modal-div-custom{
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .s-modal-div-custom input{
+            height: max-content;
+        }
+
+        .s-modal-div-custom label{
+            margin-left: 5px;
+            text-decoration: black solid;
+        }
+
+        .s-modal-div-form{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .s-modal-div-form input{
+            height: max-content;
+            width: 100%;
+        }
+
+        .s-modal-div-form label{
+            margin-left: 5px;
+            text-decoration: black solid;
+        }
+        
+        .s-modal-frame input {
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .s-modal-frame button {
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .s-modal-frame button:hover {
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+
+
+        .s-button-div-title *{
+            width: 100%;
+        }
+
+        .s-in-selected{
+            background-color: grey;
+            color: honeydew;
+        }
+
+        .s-in-editing{
+            background-color: green;
+            color: honeydew;
+        }
+
+        .s-table-rowselected {
+            border-radius: 20px;
+            background-color: hotpink;
+            color: honeydew;
+        }
+
+        table th, table td{
+            text-align: center;
+        }
+    </style>
+    <script src="assets/js/app.js"></script>
+</head>
+<body>
+<div class='container wrapper'>
+    <div>
+        <button id="s-table-btn-newdocument">Novo documento</button>
+        <button id="s-table-btn-newtitle">Novo titulo</button>
+        <button id="s-table-btn-removerow">Deletar Linha</button>
+    </div>
+    
+    <div>
+        <button id="s-table-btn-search">Procurar</button>
+        <button id="s-table-btn-sort">Ordenar</button>
+    </div>
+
+    <div>
+         <button id="s-table-btn-excel">EXCEL</button>
+         <button id="s-table-btn-loadtable">Carregar</button>
+         <button id="s-table-btn-savetable">Salvar</button>
+         <button id="s-table-btn-updatetable">Update table</button>
+         <button id="s-table-btn-sendform">Formulário</button>
+         <button id="s-table-btn-loadfunction">Carregar Função</button>
+     </div> 
+     <div id="s-table-btn-managercell"></div>
+    <div class="table responsive-xxl" style="overflow-x: auto;">
+        <table class="table table-bordered" style="width:auto">
+            <thead>
+                <tr>
+                    <th>Coluna 1</th>
+                    <th>Coluna 2</th>
+                    <th>Coluna 3</th>
+                    <th>Coluna 4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Reamonn Corkill</td>
+                    <td>Pharmacist</td>
+                    <td>France</td>
+                    <td>Fast and the Furious, The</td>
+                </tr>
+                <tr>
+                    <td>Dara Lovell</td>
+                    <td>Assistant Professor</td>
+                    <td>Russia</td>
+                    <td>Villa Rides!</td>
+                </tr>
+                <tr>
+                    <td>Zorina Hugli</td>
+                    <td>Design Engineer</td>
+                    <td>China</td>
+                    <td>Oranges and Sunshine</td>
+                </tr>
+                <tr>
+                    <td>Jeff Cornier</td>
+                    <td>Assistant Media Planner</td>
+                    <td>China</td>
+                    <td>39 Steps, The</td>
+                </tr>
+                <tr>
+                    <td>Waldo Pilmoor</td>
+                    <td>Staff Scientist</td>
+                    <td>China</td>
+                    <td>Son of Rambow</td>
+                </tr>
+                <tr>
+                    <td>Major Feldhuhn</td>
+                    <td>Automation Specialist I</td>
+                    <td>Egypt</td>
+                    <td>That Day (Ce jour-là)</td>
+                </tr>
+                <tr>
+                    <td>Sue Cardenosa</td>
+                    <td>Administrative Assistant I</td>
+                    <td>Mongolia</td>
+                    <td>Stay as You Are</td>
+                </tr>
+                <tr>
+                    <td>Seward Fursey</td>
+                    <td>Nuclear Power Engineer</td>
+                    <td>Russia</td>
+                    <td>Bird</td>
+                </tr>
+                <tr>
+                    <td>Fernanda Well</td>
+                    <td>Recruiter</td>
+                    <td>France</td>
+                    <td>Titus</td>
+                </tr>
+                <tr>
+                    <td>Deva Griswaite</td>
+                    <td>Nurse</td>
+                    <td>Bhutan</td>
+                    <td>Cup, The (Phörpa)</td>
+                </tr>
+                <tr>
+                    <td>Becka Kohlerman</td>
+                    <td>Senior Sales Associate</td>
+                    <td>Portugal</td>
+                    <td>2-Headed Shark Attack</td>
+                </tr>
+                <tr>
+                    <td>Dunc Faragher</td>
+                    <td>Occupational Therapist</td>
+                    <td>Brazil</td>
+                    <td>Life is to Whistle (Vida es silbar, La)</td>
+                </tr>
+                <tr>
+                    <td>Adelbert Zanini</td>
+                    <td>Recruiting Manager</td>
+                    <td>Indonesia</td>
+                    <td>Class Trip, The (La classe de neige)</td>
+                </tr>
+                <tr>
+                    <td>Rosamund Spooner</td>
+                    <td>Account Coordinator</td>
+                    <td>China</td>
+                    <td>The Inner Circle</td>
+                </tr>
+                <tr>
+                    <td>Eleonore Meaders</td>
+                    <td>VP Quality Control</td>
+                    <td>Indonesia</td>
+                    <td>Take Me Home</td>
+                </tr>
+            </tbody>
+	   </table>
+    </div>
+
+
+
+</div>
+
+<pre id="s-text-test"></pre>
+</body>
+</html>

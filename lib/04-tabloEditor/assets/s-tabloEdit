@@ -1,0 +1,6 @@
+export default class s_tabloEdit{
+    constructor(table){
+        this.table = table;
+        table.
+    }
+}
