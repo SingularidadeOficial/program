@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="sdata-tablo">
+        <thead>
+            <th>Title 1</th>
+            <th>Title 2</th>
+            <th>Title 3</th>
+            <th>Title 4</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Nome 1</td>
+                <td>Peso 1</td>
+                <td>Idade 1</td>
+                <td>Objetivo 1</td>
+            </tr>
+            <tr>
+                <td>Nome 2</td>
+                <td>Peso 2</td>
+                <td>Idade 2</td>
+                <td>Objetivo 2</td>
+            </tr>
+            <tr>
+                <td>Nome 3</td>
+                <td>Peso 3</td>
+                <td>Idade 3</td>
+                <td>Objetivo 3</td>
+            </tr>
+            <tr>
+                <td>Nome 4</td>
+                <td>Peso 4</td>
+                <td>Idade 4</td>
+                <td>Objetivo 4</td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="module" src="./assets/s-t-editable.js"></script>
+    <script type="module" src="./assets/s-t-linkFunction.js"></script>
+
+    <script type="module">
+        import slib_t_editable from "./assets/s-t-editable.js";
+        import slib_t_linkFunction from "./assets/s-t-linkFunction.js";
+
+        const Slib_t_editable = new slib_t_editable(document.querySelector('#sdata-tablo'));
+        const Slib_t_linkFunction = new slib_t_linkFunction(document.querySelector('#sdata-tablo'));
+    </script>
+</body>
+</html>
